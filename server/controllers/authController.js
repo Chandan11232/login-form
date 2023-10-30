@@ -66,6 +66,10 @@ const loginUser = async (req, res) => {
     } else {
     }
 
+    const printHello = () => {
+      console.log("Hello");
+    };
+
     //check if password matches
 
     // const match = await comparePassword(password, user.password);
