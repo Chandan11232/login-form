@@ -1,5 +1,6 @@
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 //register endpoint
 const registerUser = async (req, res) => {
@@ -66,29 +67,25 @@ const loginUser = async (req, res) => {
     } else {
     }
 
-    const printHello = () => {
-      console.log("Hello");
-    };
-
     //check if password matches
 
-    // const match = await comparePassword(password, user.password);
-    // if (match) {
-    //   jwt.sign(
-    //     { email: user.email, id: user._id, name: user.name },
-    //     89723472894,
-    //     {},
-    //     (err, token) => {
-    //       if (err) throw err;
-    //       res.cookie("token", token).json(user);
-    //     }
-    //   );
-    // }
-    // if (!match) {
-    //   res.json({
-    //     error: "Password do not match",
-    //   });
-    // }
+    const match = await comparePassword(password, user.password);
+    if (match) {
+      jwt.sign(
+        { email: user.email, id: user._id, name: user.name },
+        "234234558260",
+        {},
+        (err, token) => {
+          if (err) throw err;
+          res.cookie("token", token).json(user);
+        }
+      );
+    }
+    if (!match) {
+      res.json({
+        error: "Password do not match",
+      });
+    }
   } catch (err) {
     console.log(err);
   }
