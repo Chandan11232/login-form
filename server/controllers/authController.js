@@ -64,13 +64,8 @@ const loginUser = async (req, res) => {
       return res.json({
         error: "Enter the correct password",
       });
-    } else {
     }
-
-    //check if password matches
-
-    const match = await comparePassword(password, user.password);
-    if (match) {
+    if (isvalidPass) {
       jwt.sign(
         { email: user.email, id: user._id, name: user.name },
         "234234558260",
@@ -80,18 +75,30 @@ const loginUser = async (req, res) => {
           res.cookie("token", token).json(user);
         }
       );
+    } else {
+      res.send("Password matched");
     }
-    if (!match) {
-      res.json({
-        error: "Password do not match",
-      });
-    }
+    5;
   } catch (err) {
     console.log(err);
+  }
+};
+
+const getProfile = (req, res) => {
+  const { token } = req.cookies;
+  console.log(req.cookies);
+  if (token) {
+    jwt.verify(token, 234234558260, {}, (err, user) => {
+      if (err) throw err;
+      res.json(user);
+    });
+  } else {
+    res.json(null);
   }
 };
 
 module.exports = {
   registerUser,
   loginUser,
+  getProfile,
 };

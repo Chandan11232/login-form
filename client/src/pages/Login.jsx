@@ -23,7 +23,7 @@ const Login = () => {
         toast.error(data.error);
       } else {
         setData({});
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -47,7 +47,7 @@ const Login = () => {
           value={data.password}
           onChange={(e) => setData({ ...data, password: e.target.value })}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">login</button>
       </form>
     </div>
   );
